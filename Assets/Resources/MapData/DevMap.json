@@ -228,7 +228,7 @@
                         "tileType": 0
                     },
                     {
-                        "tileMeshName": "LakeOuterCorner",
+                        "tileMeshName": "Shore",
                         "tileMeshRotation": 90,
                         "tileGridPosition": {
                             "x": 2,

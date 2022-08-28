@@ -7,11 +7,11 @@ namespace Game.Environment.Map
     public class MapBuilderInstaller : MonoInstaller
     {
         [SerializeField] TileMeshLibrary tileMeshLibrary;
-        [SerializeField] MapCreator mapCreator;
+       // [SerializeField] MapCreator mapCreator;
         public override void InstallBindings()
         {
             Container.Bind<TileMeshLibrary>().To<TileMeshLibrary>().FromInstance(tileMeshLibrary);
-            Container.Bind<MapCreator>().To<MapCreator>().FromInstance(mapCreator);
+          //  Container.Bind<MapCreator>().To<MapCreator>().FromInstance(mapCreator);
         }
     }
 }

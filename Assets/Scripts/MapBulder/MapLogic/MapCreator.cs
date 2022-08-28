@@ -11,21 +11,31 @@ namespace Game.Environment.Map
         [SerializeField] Vector2Int gridSize = new Vector2Int(10, 10);
         [SerializeField] MapDataJsonSerializer mapDataSerializer;
         IMapData iMapDataAsset;
-        [Zenject.Inject] TileMeshLibrary meshLibrary;
+        TileMeshLibrary meshLibrary;
         [SerializeField] EditableTile editableTilePrefab;
         EditableTile[,] instantiatedTiles = new EditableTile[0, 0];
-        private void Awake()
-        {
-            iMapDataAsset = mapDataSerializer.GetMapData();
-        }
-        private void OnApplicationQuit()
+
+        public void SerializeOnSceneMap()
         {
             Debug.Log("Map was saved");
             mapDataSerializer.SerializeMap();
         }
-        private void Start()
+        public Bounds GetMapBounds()
         {
-
+            if (instantiatedTiles.Length > 0)
+            {
+                Vector3 cellSize = instantiatedTiles[0, 0].ScaledMeshSize;
+                float cellThickness = 2f;
+                Vector3 totalSize = new Vector3(cellSize.x * gridSize.x, cellSize.y, cellSize.z * gridSize.y);
+                Bounds outputBounds = new Bounds(this.transform.position, totalSize);
+                return outputBounds;
+            }
+            return new Bounds(Vector3.zero, Vector3.zero);
+        }
+        public void InstantiateMap(TileMeshLibrary meshLibrary)
+        {
+            this.meshLibrary = meshLibrary;
+            iMapDataAsset = mapDataSerializer.GetMapData();
             LoadMap();
         }
         public void LoadMap()
@@ -57,7 +67,7 @@ namespace Game.Environment.Map
         }
         public void UpdateTileMesh(string meshName, ISelectable editableTile)
         {
-            if(editableTile is EditableTile)
+            if (editableTile is EditableTile)
             {
                 UpdateTileMesh(meshName, (EditableTile)editableTile);
             }
@@ -88,7 +98,7 @@ namespace Game.Environment.Map
 
         public List<EditableTile> GetTileListByTileCorners(EditableTile editableTile1, EditableTile editableTile2)
         {
-          
+
             Vector2Int index1 = GetTileIndexByTile(editableTile1);
             Vector2Int index2 = GetTileIndexByTile(editableTile2);
             Vector2Int startIndex = new Vector2Int(Mathf.Min(index1.x, index2.x), Mathf.Min(index1.y, index2.y));
