@@ -25,7 +25,6 @@ namespace Game.Environment.Map
             if (instantiatedTiles.Length > 0)
             {
                 Vector3 cellSize = instantiatedTiles[0, 0].ScaledMeshSize;
-                float cellThickness = 2f;
                 Vector3 totalSize = new Vector3(cellSize.x * gridSize.x, cellSize.y, cellSize.z * gridSize.y);
                 Bounds outputBounds = new Bounds(this.transform.position, totalSize);
                 return outputBounds;
@@ -40,9 +39,25 @@ namespace Game.Environment.Map
         }
         public void LoadMap()
         {
+            Vector2Int gridSizeFromMapData = iMapDataAsset.GetGridSize();
+            Extensions.DisposeMatrix(instantiatedTiles);
+            instantiatedTiles = TileInGridInitialized.InstantiateTileGrid(gridSizeFromMapData, editableTilePrefab.ScaledMeshSize, editableTilePrefab, this.transform);
+            for (int x = 0; x < gridSizeFromMapData.x; x++)
+            {
+                for (int y = 0; y < gridSizeFromMapData.y; y++)
+                {
+                    iMapDataAsset.GetTileGridCells()[x, y].tileGridPosition = new Vector2Int(x, y);
+                    instantiatedTiles[x, y].name = $"{x} {y} {instantiatedTiles[x, y].name} ";
+                    ApplySettingsToTile(instantiatedTiles[x, y], iMapDataAsset.GetTileGridCells()[x, y]);
+                }
+            }
+        }
+
+        public void OldLoadMap()
+        {
             if (!Application.isPlaying)
             {
-                Debug.Log($"Unity is not playing silly");
+                Debug.LogWarning($"Unity is not playing silly");
                 return;
             }
             Vector2Int gridSizeFromMapData = iMapDataAsset.GetGridSize();
