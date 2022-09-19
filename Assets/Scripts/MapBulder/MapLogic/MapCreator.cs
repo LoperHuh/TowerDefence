@@ -62,8 +62,8 @@ namespace Game.Environment.Map
             }
             Vector2Int gridSizeFromMapData = iMapDataAsset.GetGridSize();
             Vector3 meshSize = editableTilePrefab.ScaledMeshSize;
-            float xStart = (meshSize.x * (gridSizeFromMapData.x - 1)) / 2;
-            float yStart = (meshSize.z * (gridSizeFromMapData.y - 1)) / 2;
+            float xStart = (meshSize.x * gridSizeFromMapData.x / 2) - (0.5f * meshSize.x);
+            float yStart = (meshSize.z * gridSizeFromMapData.y / 2) - (0.5f * meshSize.z);
             float tileElevation = 0.1f;
             Vector3 startPosition = new Vector3(-xStart, tileElevation, -yStart);
             Extensions.DisposeMatrix(instantiatedTiles);
