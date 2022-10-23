@@ -41,7 +41,7 @@ namespace Game.Environment.Map
         {
             Vector2Int gridSizeFromMapData = iMapDataAsset.GetGridSize();
             Extensions.DisposeMatrix(instantiatedTiles);
-            instantiatedTiles = TileInGridInitialized.InstantiateTileGrid(gridSizeFromMapData, editableTilePrefab.ScaledMeshSize, editableTilePrefab, this.transform);
+            instantiatedTiles = TileInGridInitialized.InstantiateTileGrid(gridSizeFromMapData, editableTilePrefab.ScaledMeshSize, editableTilePrefab, this.transform,this.transform.position);
             for (int x = 0; x < gridSizeFromMapData.x; x++)
             {
                 for (int y = 0; y < gridSizeFromMapData.y; y++)
@@ -80,7 +80,7 @@ namespace Game.Environment.Map
                 }
             }
         }
-        public void UpdateTileMesh(string meshName, ISelectable editableTile)
+        public void UpdateTileMesh(string meshName, ITileTargetDroppable editableTile)
         {
             if (editableTile is EditableTile)
             {

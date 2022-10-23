@@ -8,11 +8,14 @@ namespace Game.Environment.Map
     {
         [SerializeField] MapCreator mapCreator;
         [Zenject.Inject] TileMeshLibrary meshLibrary;
+        [SerializeField] TileSetLibraryPicker tileSetLibraryPicker;
+        
         Bounds? mapBounds = null;
         public void Start()
         {
             mapCreator.InstantiateMap(meshLibrary);
             mapBounds = mapCreator.GetMapBounds();
+            tileSetLibraryPicker.InstantiatePickableGrid(mapBounds.Value.max, TileInGridInitialized.Corner.UpperLeft);
         }
         public void OnApplicationQuit()
         {

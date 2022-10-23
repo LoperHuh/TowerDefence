@@ -6,7 +6,7 @@ using System;
 
 namespace Game.Environment.Map
 {
-    public class EditableTile : MonoBehaviour, ISelectable
+    public class EditableTile : MonoBehaviour, ITileTargetDroppable
     {
         [SerializeField] MeshFilter meshFilter;
         [SerializeField] MeshRenderer meshRenderer;

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISelectable 
+public interface ITileTargetDroppable 
 {
     public Action<bool> TileSelected();
     public void SelectTarget();
